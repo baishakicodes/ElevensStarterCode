@@ -112,9 +112,10 @@ public class ElevensBoard extends Board {
      */
     private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-
+        String[] ranks = new String[3];
         for(int i=0; i<selectedCards.size(); i++){
-            if(cardAt(selectedCards.get(i)).rank().equals("jack") && cardAt(selectedCards.get()))
+            ranks[i] = cardAt(selectedCards.get(i)).rank();
         }
+        sorting.bubbleSort(ranks);
     }
 }
