@@ -60,15 +60,19 @@ public class ElevensBoard extends Board {
             if (cardAt(selectedCards.get(0)).pointValue() + cardAt(selectedCards.get(1)).pointValue() == 11) {
                 return true;
             }
+            return false;
         }
         else {
+            String[] ranks = new String[3];
             for(int i=0; i<selectedCards.size(); i++){
-                if(cardAt(selectedCards.get(i))
+                ranks[i] = cardAt(selectedCards.get(i)).rank();
+            }
+            sorting.bubbleSort(ranks);
+            if(ranks[0].equals("jack")&& ranks[1].equals("king")&&ranks[2].equals("queen")){
+                return true;
             }
         }
         return false;
-
-
     }
 
     /**
@@ -80,8 +84,10 @@ public class ElevensBoard extends Board {
      *         false otherwise.
      */
     @Override
-    public boolean anotherPlayIsPossible() {
+    public boolean anotherPlayIsPossible()
+    {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        return true;
 
     }
 
@@ -95,8 +101,12 @@ public class ElevensBoard extends Board {
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        if (cardAt(selectedCards.get(0)).pointValue() + cardAt(selectedCards.get(1)).pointValue() == 11) {
-            return true;
+        for(int i=0; i<selectedCards.size()-1; i++){
+            for(int j=i+1; i<selectedCards.size();j++){
+                if(cardAt(selectedCards.get(i)).pointValue()+cardAt(selectedCards.get(j)).pointValue()==11) {
+                    return true;
+                }
+            }
         }
         return false;
 
@@ -112,10 +122,24 @@ public class ElevensBoard extends Board {
      */
     private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        String[] ranks = new String[3];
-        for(int i=0; i<selectedCards.size(); i++){
-            ranks[i] = cardAt(selectedCards.get(i)).rank();
+        ArrayList<String> jacks = new ArrayList<String>();
+        ArrayList<String> kings = new ArrayList<String>();
+        ArrayList<String> queens = new ArrayList<String>();
+
+        for(int i=0; i<selectedCards.size();i++){
+            if(cardAt(selectedCards.get(i)).rank().equals("jack") ){
+                jacks.add(cardAt(selectedCards.get(i)).rank());
+            }
+            if(cardAt(selectedCards.get(i)).rank().equals("king") ){
+                kings.add(cardAt(selectedCards.get(i)).rank());
+            }
+            if(cardAt(selectedCards.get(i)).rank().equals("queen") ){
+                queens.add(cardAt(selectedCards.get(i)).rank());
+            }
         }
-        sorting.bubbleSort(ranks);
+        if(jacks.size()>0 && kings.size()>0 && queens.size()>0){
+            return true;
+        }
+        return false;
     }
 }
