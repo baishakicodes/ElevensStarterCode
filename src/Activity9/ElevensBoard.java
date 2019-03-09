@@ -62,7 +62,7 @@ public class ElevensBoard extends Board {
             }
             return false;
         }
-        else {
+        else if(selectedCards.size()==3){
             String[] ranks = new String[3];
             for(int i=0; i<selectedCards.size(); i++){
                 ranks[i] = cardAt(selectedCards.get(i)).rank();
@@ -71,8 +71,10 @@ public class ElevensBoard extends Board {
             if(ranks[0].equals("jack")&& ranks[1].equals("king")&&ranks[2].equals("queen")){
                 return true;
             }
+            return false;
         }
         return false;
+
     }
 
     /**
@@ -87,7 +89,7 @@ public class ElevensBoard extends Board {
     public boolean anotherPlayIsPossible()
     {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        if(containsJQK(cardIndexes())==true || containsPairSum11(cardIndexes())==true){
+        if (containsPairSum11(cardIndexes())==true|| containsJQK(cardIndexes())==true) {
             return true;
         }
         return false;
@@ -104,10 +106,15 @@ public class ElevensBoard extends Board {
      */
     private boolean containsPairSum11(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        for(int i=0; i<selectedCards.size(); i++){
-            for(int j=i+1; i<selectedCards.size();j++){
-                if(cardAt(selectedCards.get(i)).pointValue()+cardAt(selectedCards.get(j)).pointValue()==11) {
-                    return true;
+        if(selectedCards.size()<2){
+            return false;
+        }
+        else {
+            for (int i = 0; i < selectedCards.size() - 1; i++) {
+                for (int j = i + 1; j < selectedCards.size(); j++) {
+                    if (cardAt(selectedCards.get(i)).pointValue() + cardAt(selectedCards.get(j)).pointValue() == 11) {
+                        return true;
+                    }
                 }
             }
         }
@@ -125,10 +132,13 @@ public class ElevensBoard extends Board {
      */
     private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+
         ArrayList<String> jacks = new ArrayList<String>();
         ArrayList<String> kings = new ArrayList<String>();
         ArrayList<String> queens = new ArrayList<String>();
-
+        if(selectedCards.size()<3){
+            return false;
+        }
         for(int i=0; i<selectedCards.size();i++){
             if(cardAt(selectedCards.get(i)).rank().equals("jack") ){
                 jacks.add(cardAt(selectedCards.get(i)).rank());
@@ -144,5 +154,8 @@ public class ElevensBoard extends Board {
             return true;
         }
         return false;
+
+
     }
+
 }
